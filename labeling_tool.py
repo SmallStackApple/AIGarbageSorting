@@ -4,6 +4,9 @@ import numpy as np
 import os
 from tkinter import Tk, filedialog, messagebox, simpledialog
 import shutil
+import tkinter as tk
+from tkinter import ttk
+
 
 class LabelingTool:
     def __init__(self):
@@ -26,13 +29,27 @@ class LabelingTool:
             os.makedirs(self.labeled_dir)
 
     def select_mode(self):
-        root = Tk()
-        root.withdraw()
-        mode = simpledialog.askstring("Select Mode", "Enter mode (detection/material):")
-        if mode not in ['detection', 'material']:
-            messagebox.showerror("Invalid Mode", "Please enter either 'detection' or 'material'.")
-            return self.select_mode()
-        return mode
+
+        # 新增: 创建一个简单的GUI来选择模式
+        root = tk.Tk()
+        root.title("Select Mode")
+
+        mode_var = tk.StringVar(value='detection')  # 默认选择'detection'
+
+        ttk.Label(root, text="Select Mode:").pack(pady=10)
+
+        ttk.Radiobutton(root, text="Detection", variable=mode_var, value='detection').pack(anchor=tk.W, padx=20)
+        ttk.Radiobutton(root, text="Material", variable=mode_var, value='material').pack(anchor=tk.W, padx=20)
+
+        def on_select():
+            self.mode = mode_var.get()
+            root.destroy()
+
+        ttk.Button(root, text="Select", command=on_select).pack(pady=20)
+
+        root.mainloop()
+
+        return self.mode
 
     def select_image(self):
         root = Tk()
