@@ -178,5 +178,7 @@ class LabelingTool:
                     break
 
 if __name__ == "__main__":
+    os.mkdir('unlabeled_images')
+    os.mkdir('labeled_images')
     tool = LabelingTool()
     tool.run()
