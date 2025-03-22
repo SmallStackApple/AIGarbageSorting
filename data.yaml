@@ -1,0 +1,8 @@
+train: E:/PyProject/AIGarbageSorting/images/train/position
+val: E:/PyProject/AIGarbageSorting/images/val/position
+
+train_type: E:/PyProject/AIGarbageSorting/images/train/type
+val_type: E:/PyProject/AIGarbageSorting/images/val/type
+
+nc: 4  # 类别数量
+names: ['Harmful', 'Kitchen', 'Other', 'Recyclable']  # 类别名称
