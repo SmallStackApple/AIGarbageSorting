@@ -15,6 +15,7 @@ def train_model(data_yaml, model_name="yolov8n", epochs=10, batch_size=16, img_s
             "names": ['Harmful', 'Kitchen', 'Other', 'Recyclable']
         }
         model_name = "yolov8n-cls"  # 使用yolov8n-cls模型进行类型识别
+        output_model_path = "models/GarbageSortingModel_type.pt"
     else:
         data_yaml = {
             "train": "E:/PyProject/AIGarbageSorting/images/train/position",
@@ -23,6 +24,7 @@ def train_model(data_yaml, model_name="yolov8n", epochs=10, batch_size=16, img_s
             "names": ['Harmful', 'Kitchen', 'Other', 'Recyclable']
         }
         model_name = "yolov8n"  # 使用原版yolov8n模型进行位置识别
+        output_model_path = "models/GarbageSortingModel_position.pt"
 
     # 加载预训练的YOLO模型
     model = YOLO(f"{model_name}.pt")
@@ -37,10 +39,12 @@ def train_model(data_yaml, model_name="yolov8n", epochs=10, batch_size=16, img_s
         workers=4  # 数据加载线程数
     )
     print("Training completed.")
-    print(f"Results saved to {results.save_dir}")
+    print(results)
+    # 保存训练好的模型
+    model.save(output_model_path)
 
 
 if __name__ == "__main__":
     data_yaml = "E:/PyProject/AIGarbageSorting/data.yaml"  # 数据集配置文件路径
     train_model(data_yaml, train_type=False)  # 默认训练位置识别模型
-    # 若要训练类型识别模型，可以调用 train_model(data_yaml, train_type=True)
+    train_model(data_yaml, train_type=True)  # 训练类型识别模型
