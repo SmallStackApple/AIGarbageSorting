@@ -5,29 +5,17 @@ from ultralytics import YOLO
 
 
 # 训练函数
-def train_model(data_yaml, model_name="yolov8n", epochs=10, batch_size=16, img_size=640, train_type=False):
+def train_model(data_yaml, model_name="yolov8n", epochs=10, batch_size=32, img_size=640, train_type=False):
     # 根据train_type选择不同的数据路径和模型名称
     if train_type:
-        data_yaml = {
-            "train": "E:/PyProject/AIGarbageSorting/images/train/type",
-            "val": "E:/PyProject/AIGarbageSorting/images/val/type",
-            "nc": 4,
-            "names": ['Harmful', 'Kitchen', 'Other', 'Recyclable']
-        }
         model_name = "yolov8n-cls"  # 使用yolov8n-cls模型进行类型识别
         output_model_path = "models/GarbageSortingModel_type.pt"
     else:
-        data_yaml = {
-            "train": "E:/PyProject/AIGarbageSorting/images/train/position",
-            "val": "E:/PyProject/AIGarbageSorting/images/val/position",
-            "nc": 4,
-            "names": ['Harmful', 'Kitchen', 'Other', 'Recyclable']
-        }
         model_name = "yolov8n"  # 使用原版yolov8n模型进行位置识别
         output_model_path = "models/GarbageSortingModel_position.pt"
 
     # 加载预训练的YOLO模型
-    model = YOLO(f"{model_name}.pt")
+    model = YOLO(f"{output_model_path}.pt" if os.path.exists(f"{output_model_path}.pt") else f"{model_name}.pt")
 
     # 开始训练
     results = model.train(
@@ -45,6 +33,6 @@ def train_model(data_yaml, model_name="yolov8n", epochs=10, batch_size=16, img_s
 
 
 if __name__ == "__main__":
-    data_yaml = "E:/PyProject/AIGarbageSorting/data.yaml"  # 数据集配置文件路径
-    train_model(data_yaml, train_type=False)  # 默认训练位置识别模型
+    # 修改数据集配置文件路径
+    data_yaml = "./datasets"  # 数据集配置文件路径
     train_model(data_yaml, train_type=True)  # 训练类型识别模型

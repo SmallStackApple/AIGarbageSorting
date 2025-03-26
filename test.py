@@ -2,6 +2,7 @@ from PIL import Image
 from api import GarbagePredictor
 import os
 
+
 def visualize_predictions(image_path, predictions):
     from PIL import ImageDraw
     image = Image.open(image_path).convert("RGB")
@@ -12,6 +13,7 @@ def visualize_predictions(image_path, predictions):
         draw.rectangle([x1, y1, x2, y2], outline="red", width=2)
         draw.text((x1, y1), label, fill="red")
     image.show()
+
 
 if __name__ == "__main__":
     model_path = "models/GarbageSortingModel.pt"

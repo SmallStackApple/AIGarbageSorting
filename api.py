@@ -1,8 +1,10 @@
 from ultralytics import YOLO
 import os
 
+
 class GarbagePredictor:
-    def __init__(self, model_position_path="models/GarbageSortingModel_position.pt", model_type_path="models/GarbageSortingModel_type.pt"):
+    def __init__(self, model_position_path="models/GarbageSortingModel_position.pt",
+                 model_type_path="models/GarbageSortingModel_type.pt"):
         self.model_position = YOLO(model_position_path)  # 加载训练好的位置识别YOLO模型
         self.model_type = YOLO(model_type_path)  # 加载训练好的类型识别YOLO模型
 
