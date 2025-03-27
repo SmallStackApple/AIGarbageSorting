@@ -7,8 +7,8 @@ class GarbagePredictor:
                  model_type_path="models/GarbageSortingModel_type.pt"):
         """Initialize the predictor
         Args:
-            model_position_path (str): Path to the position detection model
-            model_type_path (str): Path to the type detection model
+            model_position_path (str): 模型位置路径 | Path to the position detection model
+            model_type_path (str): 类型模型路径 | Path to the type detection model
         """
         self.model_position = YOLO(model_position_path)  # Load trained YOLO model for position detection
         self.model_type = YOLO(model_type_path)  # Load trained YOLO model for type detection
@@ -79,27 +79,25 @@ class GarbagePredictor:
 
     def crop_image(self, image, x1, y1, x2, y2):
         """Crop a PIL image
-        
         Args:
-            image (PIL.Image.Image): Input image
-            x1 (int): Top-left X coordinate
-            y1 (int): Top-left Y coordinate
-            x2 (int): Bottom-right X coordinate
-            y2 (int): Bottom-right Y coordinate
+            image (PIL.Image.Image): 输入图像 | Input image
+            x1 (int): 左上角X坐标 | Top-left X coordinate
+            y1 (int): 左上角Y坐标 | Top-left Y coordinate
+            x2 (int): 右下角X坐标 | Bottom-right X coordinate
+            y2 (int): 右下角Y坐标 | Bottom-right Y coordinate
             
         Returns:
-            PIL.Image.Image: Cropped image
+            PIL.Image.Image: 裁剪后的图像 | Cropped image
         """
         return image.crop((x1, y1, x2, y2))
 
     def _base64_to_image(self, base64_str):
         """Convert a base64 encoded string to a PIL image
-        
         Args:
-            base64_str (str): Format like "data:image/png;base64,xxxx"
+            base64_str (str): 格式如“data:image/png;base64,xxxx” | Format like "data:image/png;base64,xxxx"
             
         Returns:
-            PIL.Image.Image: Decoded RGB image
+            PIL.Image.Image: 解码后的RGB图像 | Decoded RGB image
         """
         from base64 import b64decode
         from io import BytesIO
