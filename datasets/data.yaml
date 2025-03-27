@@ -1,8 +1,0 @@
-train_position: ./datasets/train/position
-val_position: ./datasets/val/position
-
-train_type: ./datasets//train/type
-val_type: ./datasets//val/type
-
-nc: 4  # 类别数量
-names: ['Harmful', 'Kitchen', 'Other', 'Recyclable']  # 类别名称

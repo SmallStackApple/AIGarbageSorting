@@ -33,6 +33,5 @@ def train_model(data_yaml, model_name="yolov8n", epochs=10, batch_size=32, img_s
 
 
 if __name__ == "__main__":
-    # 修改数据集配置文件路径
-    data_yaml = "./datasets"  # 数据集配置文件路径
-    train_model(data_yaml, train_type=True)  # 训练类型识别模型
+    train_type = True
+    train_model('./datasets/type' if train_type else './datasets/position', train_type=train_type)  # 训练类型识别模型
