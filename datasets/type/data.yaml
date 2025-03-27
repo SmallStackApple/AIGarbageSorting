@@ -1,0 +1,6 @@
+train: ./datasets/type/train
+val: ./datasets/type/val
+
+nc: 4 # 类别数量
+
+names: ['Harmful', 'Kitchen', 'Other', 'Recyclable']  # 类别名称
