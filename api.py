@@ -1,5 +1,8 @@
 from ultralytics import YOLO
 import os
+from base64 import b64decode
+from io import BytesIO
+from PIL import Image
 
 
 class GarbagePredictor:
@@ -99,8 +102,6 @@ class GarbagePredictor:
         Returns:
             PIL.Image.Image: 解码后的RGB图像 | Decoded RGB image
         """
-        from base64 import b64decode
-        from io import BytesIO
         _, img_str = base64_str.split(',', 1)
         img_bytes = b64decode(img_str)
         return Image.open(BytesIO(img_bytes)).convert("RGB")

@@ -5,7 +5,7 @@ from ultralytics import YOLO
 
 
 # 训练函数
-def train_model(data_yaml, model_name="yolov8n", epochs=10, batch_size=32, img_size=640, train_type=False):
+def train_model(data_yaml, epochs=10, batch_size=32, img_size=640, train_type=False):
     # 根据train_type选择不同的数据路径和模型名称
     if train_type:
         model_name = "yolov8n-cls"  # 使用yolov8n-cls模型进行类型识别
