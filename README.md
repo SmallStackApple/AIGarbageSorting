@@ -1,13 +1,16 @@
-# AIGarbageSorting
-# 中文
+# AIGarbageSorting :: AIGarbageSorting
 
-## 项目概述
-AIGarbageSorting是一个基于深度学习算法的垃圾分类系统，用于对垃圾进行分类和识别。
-## 功能
-- **检测模式**：标注垃圾的位置。
-- **材质模式**：标注垃圾的材质类别。
-- **自动训练**：根据标注的数据自动训练模型，并清理标注后的图片。
-## 安装依赖
+## 项目简介 :: Project Introduction  
+基于YOLO的垃圾智能分类系统，实现垃圾位置定位与类型识别的端到端解决方案。  
+The intelligent garbage classification system based on YOLO, providing an end-to-end solution for garbage position localization and type recognition.
+
+## 功能特性 :: Features  
+- 支持多输入格式（图片路径/ Base64编码/PIL图像）  
+- 双模型联合预测：先定位垃圾位置，再进行类型分类  
+- 可视化预测结果展示  
+- 支持模型训练与参数调优  
+
+## 依赖环境 :: Dependencies
 ### 使用虚拟环境 (推荐)
 1. 确保已安装Python 3.x(最好使用3.12.X)。
 2. 安装virtualenv(如果没有安装):

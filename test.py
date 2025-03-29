@@ -1,28 +1,40 @@
-from PIL import Image
-from api import GarbagePredictor
+import argparse
 import os
-
-
-def visualize_predictions(image_path, predictions):
-    from PIL import ImageDraw
-    image = Image.open(image_path).convert("RGB")
-    draw = ImageDraw.Draw(image)
-    for box, score, cls in zip(predictions["boxes"], predictions["scores"], predictions["classes"]):
-        x1, y1, x2, y2 = box
-        label = f"Class {int(cls)} ({score:.2f})"
-        draw.rectangle([x1, y1, x2, y2], outline="red", width=2)
-        draw.text((x1, y1), label, fill="red")
-    image.show()
-
+from PIL import Image
+from api import GarbagePredictor  # 新增导入语句
 
 if __name__ == "__main__":
-    model_path = "models/GarbageSortingModel.pt"
-    predictor = GarbagePredictor(model_path)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--mode', type=str, choices=['both', 'position', 'type'], default='both',
+                        help='选择识别模式: both(默认), position仅位置检测, type仅类型检测 | Select detection mode: both(default), position only, type only')
+    parser.add_argument('--input_dir', type=str, default='./test_images', 
+                        help='测试图片目录路径 | Test images directory path')
+    
+    args = parser.parse_args()
+    test_images_dir = args.input_dir
 
-    test_images_dir = "E:/PyProject/AIGarbageSorting/test_images"
+    predictor = GarbagePredictor()  # 初始化预测器实例 | Initialize predictor instance
+
+    # 遍历测试图片目录 | Iterate through test images directory
     for image_name in os.listdir(test_images_dir):
         if image_name.endswith(('.png', '.jpg', '.jpeg')):
-            image_path = os.path.join(test_images_dir, image_name)
-            predictions = predictor.predict([image_path])[0]
-            print(f"Image: {image_name}, Predictions: {predictions}")
-            visualize_predictions(image_path, predictions)
+            img_path = os.path.join(test_images_dir, image_name)
+            image = Image.open(img_path)  # 读取图像 | Read image
+
+            # 处理不同模式的预测逻辑 | Handle different prediction modes
+            if args.mode == 'both':
+                # 联合预测 | Joint prediction
+                results = predictor.predict([image])
+                print(f"联合预测结果：{results}")
+                
+            elif args.mode == 'position':
+                # 仅位置预测 | Position prediction only
+                pos_results = predictor.predict_position([image])
+                print(f"位置预测结果：{pos_results}")
+                
+            elif args.mode == 'type':
+                # 先预测位置再类型 | Predict position then type
+                pos_results = predictor.predict_position([image])
+                boxes_list = [res.boxes for res in pos_results]  # 假设结果包含boxes属性
+                type_results = predictor.predict_type([image])
+                print(f"类型预测结果：{type_results}")
