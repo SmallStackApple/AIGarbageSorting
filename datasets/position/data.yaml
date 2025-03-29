@@ -1,0 +1,4 @@
+train: E:\pyproject\AIGarbageSorting\datasets\position\train\images
+val: E:\pyproject\AIGarbageSorting\datasets\position\val\images
+nc: 1
+names: ['trash']

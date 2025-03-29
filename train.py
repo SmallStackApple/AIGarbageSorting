@@ -33,5 +33,5 @@ def train_model(data_yaml, epochs=10, batch_size=32, img_size=640, train_type=Fa
 
 
 if __name__ == "__main__":
-    train_type = True
-    train_model('./datasets/type' if train_type else './datasets/position', train_type=train_type)  # 训练类型识别模型
+    train_type = False
+    train_model('./datasets/type' if train_type else './datasets/position/data.yaml', train_type=train_type)  # 训练类型识别模型
